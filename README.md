@@ -6,7 +6,7 @@
   - `pip install -r requirements.txt`
 
 - Install spaCy with the following command
-  - `pip install -U pip setuptools wheel`
+    - `pip install -U pip setuptools wheel`
     - `pip install -U spacy`
 
 - Download these efficiency spaCy model with the following command
