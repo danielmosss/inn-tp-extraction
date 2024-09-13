@@ -3,7 +3,7 @@ from spacy import displacy
 from datetime import datetime
 import os
 
-models = ["en_core_web_sm", "nl_core_news_sm"]
+models = ["en_core_web_sm", "nl_core_news_sm", "nl_core_web_lg", "en_core_web_trf"]
 
 def get_input_file():
     input_folder = "input"
