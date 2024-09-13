@@ -3,19 +3,25 @@ from spacy import displacy
 from datetime import datetime
 import os
 
+def ExitError(message):
+    print(message)
+    exit()
+
 models = ["en_core_web_sm", "nl_core_news_sm", "nl_core_web_lg", "en_core_web_trf"]
 
 def get_input_file():
     input_folder = "input"
-    files = os.listdir(input_folder)
+    try:
+        files = os.listdir(input_folder)
+    except FileNotFoundError:
+        ExitError("ERROR: Input folder not found")
 
     print("Choose a file to process:")
     for i, file in enumerate(files):
         print(f"{i+1}. {file}")
 
     if len(files) == 0:
-        IndexError("No files found in the input folder")
-        exit()
+        ExitError("ERROR: No files found in input folder")
 
     choice = int(input("Enter the file number: ")) - 1
     return os.path.join(input_folder, files[choice])
@@ -51,7 +57,8 @@ def process_file():
     
     # create filename
     output_folder = "output"
-    output_filename = f"output-{input_filename}-{dt_string}.html"
+    filename_without_extension = os.path.splitext(input_filename)[0]
+    output_filename = f"output-{input_filename}-{model}-{dt_string}.html"
     output_path = os.path.join(output_folder, output_filename)
     
     # write file to path
