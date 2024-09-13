@@ -13,6 +13,10 @@ def get_input_file():
     for i, file in enumerate(files):
         print(f"{i+1}. {file}")
 
+    if len(files) == 0:
+        IndexError("No files found in the input folder")
+        exit()
+
     choice = int(input("Enter the file number: ")) - 1
     return os.path.join(input_folder, files[choice])
 
@@ -20,7 +24,7 @@ def choose_model():
     print("Choose a spaCy model:")
     for i, model in enumerate(models):
         print(f"{i+1}. {model}")
-    
+   
     choice = int(input("Enter the model number: ")) - 1
     return models[choice]
 
