@@ -9,9 +9,13 @@
   - `pip install -U pip setuptools wheel`
     - `pip install -U spacy`
 
-- Download the spaCy model with the following command
+- Download these efficiency spaCy model with the following command
     - `python -m spacy download en_core_web_sm`
     - `python -m spacy download nl_core_web_sm`
+
+- Download the following accuracy models
+    - `python -m spacy download en_core_web_trf`
+    - `python -m spacy download nl_core_web_trf`
 
 ## Step 2
 - Create 2 folders in the root directory of the project
