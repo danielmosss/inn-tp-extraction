@@ -34,6 +34,13 @@ def choose_model():
     choice = int(input("Enter the model number: ")) - 1
     return models[choice]
 
+def choose_display_style():
+    print("Choose a display style:")
+    print("1. Dependency")
+    print("2. Entity")
+    choice = int(input("Enter the style number: "))
+    return "dep" if choice == 1 else "ent"
+
 def process_file():
     # Choose file
     input_file = get_input_file()
@@ -49,7 +56,8 @@ def process_file():
 
     # Process the text
     doc = nlp(text)
-    html = displacy.render(doc, style="dep")
+    display_style = choose_display_style()
+    html = displacy.render(doc, display_style)
     
     # GEt time to put in file
     now = datetime.now()
