@@ -7,7 +7,7 @@ def ExitError(message):
     print(message)
     exit()
 
-models = ["en_core_web_sm", "nl_core_news_sm", "nl_core_web_lg", "en_core_web_trf"]
+models = ["en_core_web_sm", "nl_core_news_sm", "nl_core_news_lg", "en_core_web_trf"]
 
 def get_input_file():
     input_folder = "input"
@@ -49,7 +49,7 @@ def process_file():
 
     # Process the text
     doc = nlp(text)
-    html = displacy.render(doc, style="ent")
+    html = displacy.render(doc, style="dep")
     
     # GEt time to put in file
     now = datetime.now()
