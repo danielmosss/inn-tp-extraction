@@ -1,4 +1,4 @@
-# inn-tp-extraction
+# INN-TP-EXTRACTION (Technology Prototype)
 
 ## Step 1
 - Clone the repository
