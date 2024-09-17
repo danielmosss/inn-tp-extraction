@@ -47,6 +47,6 @@ then download https://aka.ms/vs/17/release/vc_redist.x64.exe
 
 ## Step 7
 - Run the project with the following command
-  - `python main.py`
+  - `python extraction/main.py`
   - Choose depending on you input file text language the right model.
   - The large model will preform significantly better.
