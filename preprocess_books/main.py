@@ -6,8 +6,6 @@ def extract_books_from_text(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         data = file.read()
     
-    # Split books based on an identifier (assumed pattern from your text)
-    # Each book starts with an index like 620, 843, etc.
     books_raw = data.split("\n")
     books = []
     print(f"Total books found: {len(books_raw)}")
@@ -21,7 +19,8 @@ def extract_books_from_text(file_path):
                 title = lines[2]
                 author = lines[3]
                 publication_date = lines[4]
-                genres = json.loads(lines[5])
+                genres_dict = json.loads(lines[5])
+                genres = list(genres_dict.values())
                 description = "\t".join(lines[6:])
 
                 book = {
@@ -39,8 +38,6 @@ def extract_books_from_text(file_path):
                 print(f"Error processing: {book_raw}")
                 continue
     return books
-
-# Function to write each book to a separate JSON file
 def write_books_to_json(books, output_dir):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -54,14 +51,11 @@ def write_books_to_json(books, output_dir):
             json.dump(book, json_file, ensure_ascii=False, indent=4)
 
         print(f"Saved {file_path}")
-
-# Main function to process the text file and create output books
 def process_books(input_file):
     output_dir = "./output_books"
     books = extract_books_from_text(input_file)
     write_books_to_json(books, output_dir)
 
-# Run the function
 if __name__ == "__main__":
     input_file = "books.txt"  # Replace with your .txt file path
     process_books(input_file)
