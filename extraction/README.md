@@ -26,7 +26,8 @@ then download https://aka.ms/vs/17/release/vc_redist.x64.exe
 ## Step 5
 - Create 2 folders in the root directory of the project
   ```bash
-  mkdir input output
+  mkdir input
+  mkdir output
   ```
 
 ## Step 6

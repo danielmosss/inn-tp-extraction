@@ -2,6 +2,7 @@ import spacy
 from spacy import displacy
 from datetime import datetime
 import os
+import json
 
 def ExitError(message):
     print(message)
@@ -48,7 +49,8 @@ def process_file():
 
     # Read contents
     with open(input_file, 'r') as f:
-        text = f.read()
+        text = json.load(f)
+        text = text["description"]
     
     # get model
     model = choose_model()

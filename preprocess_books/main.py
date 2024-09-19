@@ -21,7 +21,7 @@ def extract_books_from_text(file_path):
                 publication_date = lines[4]
                 genres_dict = json.loads(lines[5])
                 genres = list(genres_dict.values())
-                description = "\t".join(lines[6:])
+                text = "\t".join(lines[6:])
 
                 book = {
                     "book_id": book_id,
@@ -30,7 +30,7 @@ def extract_books_from_text(file_path):
                     "author": author,
                     "publication_date": publication_date,
                     "genres": genres,
-                    "description": description
+                    "text": text
                 }
 
                 books.append(book)
