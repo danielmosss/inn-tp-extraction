@@ -34,10 +34,11 @@ def extract_books_from_text(file_path):
                 }
 
                 books.append(book)
-            except IndexError:
-                print(f"Error processing: {book_raw}")
+            except (IndexError, json.JSONDecodeError) as e:
+                print(f"Error processing: {book_raw} - {e}")
                 continue
     return books
+
 def write_books_to_json(books, output_dir):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -51,6 +52,7 @@ def write_books_to_json(books, output_dir):
             json.dump(book, json_file, ensure_ascii=False, indent=4)
 
         print(f"Saved {file_path}")
+
 def process_books(input_file):
     output_dir = "./output_books"
     books = extract_books_from_text(input_file)
