@@ -1,5 +1,10 @@
 import os
 import json
+import re
+
+# Function to sanitize file names by removing forbidden characters
+def sanitize_filename(filename):
+    return re.sub(r'[<>:"/\\|?*]', '_', filename)
 
 # Function to extract book details from the input text
 def extract_books_from_text(file_path):
@@ -45,7 +50,7 @@ def write_books_to_json(books, output_dir):
 
     for book in books:
         # Create a file name using the book's title and author
-        filename = f"{book['title'].replace(' ', '_')}-{book['author'].replace(' ', '_')}.json"
+        filename = f"{sanitize_filename(book['title'].replace(' ', '_'))}-{sanitize_filename(book['author'].replace(' ', '_'))}.json"
         file_path = os.path.join(output_dir, filename)
 
         with open(file_path, 'w', encoding='utf-8') as json_file:
