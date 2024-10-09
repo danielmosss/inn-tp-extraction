@@ -18,11 +18,12 @@ def get_search_term():
     return input("Enter the search term: ")
 
 
-def fetch_records(cursor, category, search_term, offset, limit=20):
+def fetch_records(cursor, category, search_term, offset, limit=10):
     cursor.execute('''
-        SELECT book_id, term, category 
-        FROM book_terms 
-        WHERE category = ? AND term LIKE ? 
+        SELECT book_id, category, GROUP_CONCAT(term, ', ') as terms
+        FROM book_terms
+        WHERE category = ? AND term LIKE ?
+        GROUP BY book_id, category
         LIMIT ? OFFSET ?
     ''', (category, f'%{search_term}%', limit, offset))
     return cursor.fetchall()
@@ -30,8 +31,8 @@ def fetch_records(cursor, category, search_term, offset, limit=20):
 
 def count_records(cursor, category, search_term):
     cursor.execute('''
-        SELECT COUNT(*) 
-        FROM book_terms 
+        SELECT COUNT(DISTINCT book_id)
+        FROM book_terms
         WHERE category = ? AND term LIKE ?
     ''', (category, f'%{search_term}%'))
     return cursor.fetchone()[0]
@@ -52,11 +53,14 @@ def main():
     while offset < total_records:
         records = fetch_records(cursor, category, search_term, offset)
         for record in records:
-            print(record)
+            book_id, category, terms = record
+            print(f"Book ID: {book_id}, Category: {category}, Terms: [{terms}]")
 
-        offset += 20
+        print(f"Showing books {offset + 1} to {min(offset + 10, total_records)} of {total_records}")
+
+        offset += 10
         if offset < total_records:
-            next_page = input("Press Enter to see the next page or type 'q' to quit: ")
+            next_page = input("Next page = Enter, Quit = Q: ")
             if next_page.lower() == 'q':
                 break
 
