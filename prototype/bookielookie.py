@@ -1,6 +1,4 @@
 ﻿import sqlite3
-import os
-
 
 def get_category(cursor):
     cursor.execute('SELECT DISTINCT category FROM book_terms')
