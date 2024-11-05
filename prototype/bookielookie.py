@@ -1,6 +1,15 @@
 ﻿import sqlite3
 
 def get_category(cursor):
+    """
+    Prompts the user to select a category from the distinct categories in the book_terms table.
+
+    Args:
+        cursor (sqlite3.Cursor): The SQLite cursor object.
+
+    Returns:
+        str: The selected category.
+    """
     cursor.execute('SELECT DISTINCT category FROM book_terms')
     categories = cursor.fetchall()
 
@@ -17,6 +26,19 @@ def get_search_term():
 
 
 def fetch_records(cursor, category, search_term, offset, limit=10):
+    """
+    Fetches records from the book_terms table based on the category and search term, with pagination.
+
+    Args:
+        cursor (sqlite3.Cursor): The SQLite cursor object.
+        category (str): The category to filter by.
+        search_term (str): The search term to filter by.
+        offset (int): The offset for pagination.
+        limit (int, optional): The number of records to fetch per page. Defaults to 10.
+
+    Returns:
+        list: A list of tuples containing book_id, category, and concatenated terms.
+    """
     cursor.execute('''
         SELECT book_id, category, GROUP_CONCAT(term, ', ') as terms
         FROM book_terms
@@ -28,6 +50,17 @@ def fetch_records(cursor, category, search_term, offset, limit=10):
 
 
 def count_records(cursor, category, search_term):
+    """
+    Counts the total number of distinct book_ids in the book_terms table based on the category and search term.
+
+    Args:
+        cursor (sqlite3.Cursor): The SQLite cursor object.
+        category (str): The category to filter by.
+        search_term (str): The search term to filter by.
+
+    Returns:
+        int: The total number of distinct book_ids.
+    """
     cursor.execute('''
         SELECT COUNT(DISTINCT book_id)
         FROM book_terms
@@ -37,6 +70,11 @@ def count_records(cursor, category, search_term):
 
 
 def main():
+    """
+    Main function to run the script. Connects to the SQLite database, prompts the user for category and search term,
+    and displays the results with pagination.
+    """
+
     db_name = "books_with_genres.db"
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
